@@ -7,15 +7,9 @@ namespace DataAccess.Abstract
 {
     //Dal : Data Access Layer  , Dao aynı anlamda kullanılıyor
     //Product tablosunun veri erişim katmanı
-    public interface IProductDal
+    //interface metotlari default public
+    public interface IProductDal:IEntityRepository<Product> //IEntityRepository'i Product için yapılandırmış olduk
     {
-        //interface metotlari default public
-        List<Product> GetAll();
-        void Add(Product product);
-        void Update(Product product);
-        void Delete(Product product);
         
-        List<Product> GetAllByCategory(int categoryId);//ürünleri kategoriye göre filtrele
-
     }
 }
