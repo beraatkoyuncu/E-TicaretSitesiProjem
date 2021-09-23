@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace WebAPI.Controllers
@@ -16,7 +17,7 @@ namespace WebAPI.Controllers
     public class ProductsController : ControllerBase
     {
         //Losely coupled : gevsek bagımlılık
-        IProductService _productService;
+        private IProductService _productService;
 
         public ProductsController(IProductService productService)
         {
@@ -24,9 +25,12 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet("getall")]
-        public IActionResult Get()
+        public IActionResult GetAll()
         {
             //Dependency chain : bagımlılık zinciri
+
+            Thread.Sleep(1000);
+
             var result = _productService.GetAll();
             if (result.Success)
             {
@@ -37,7 +41,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet("getbyid")]
-        public IActionResult Get(int id)
+        public IActionResult GetById(int id)
         {
             var result = _productService.GetById(id);
             if (result.Success)
@@ -59,6 +63,16 @@ namespace WebAPI.Controllers
 
         }
 
+        [HttpGet("getbycategory")]
+        public IActionResult GetByCategory(int categoryId)
+        {
+            var result = _productService.GetAllByCategoryId(categoryId);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
 
 
 

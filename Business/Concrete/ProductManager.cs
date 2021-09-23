@@ -22,8 +22,8 @@ namespace Business.Concrete
 {
     public class ProductManager : IProductService
     {
-        IProductDal _productDal;
-        ICategoryService _categoryService;
+        private IProductDal _productDal;
+        private ICategoryService _categoryService;
 
         public ProductManager(IProductDal productDal,ICategoryService categoryService)
         {
@@ -45,21 +45,7 @@ namespace Business.Concrete
             }
             _productDal.Add(product);
             return new SuccessResult(Messages.ProductAdded);
-
-
-           
-
-            //ValidationTool.Validate(new ProductValidator(), product);
-            //if (product.UnitPrice<=0)
-            //{
-            //    return new ErrorResult(Messages.UnitPriceInvalid);
-            //}
-            //if (product.ProductName.Length<2)
-            //{
-            //    return new ErrorResult(Messages.ProductNameInvalid);
-            //}
-
-            
+                        
         }
 
         [CacheAspect]
@@ -76,9 +62,9 @@ namespace Business.Concrete
 
         }
 
-        public IDataResult<List<Product>> GetAllByCategoryId(int id)
+        public IDataResult<List<Product>> GetAllByCategoryId(int categoryId)
         {
-            return new SuccessDataResult<List<Product>>(_productDal.GetAll(p => p.CategoryId == id));
+            return new SuccessDataResult<List<Product>>(_productDal.GetAll(p => p.CategoryId == categoryId));
         }
 
         [CacheAspect]
@@ -149,5 +135,13 @@ namespace Business.Concrete
             Add(product);
             return null;
         }
+
+        //public IDataResult<List<Product>> GetByCategoryId(int categoryId)
+        //{
+        //    throw new NotImplementedException();
+        //    return new SuccessDataResult<List<Product>>(_productDal.GetAll(), Messages.ProductListed);
+        //}
+
+        
     }
 }
